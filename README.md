@@ -1,16 +1,18 @@
-### RECURSIVE
-```plaintext
+### 1. RECURSIVE
 Prerequisites
 A sample PDF document (example available in the Curriculum GitHub repository)
 A .env to file containing an Atlas Cluster Connection String and OpenAI API Key
-Install requirements:
-pip3 install langchain langchain_community langchain_openai pymongo pypdf python-dotenv 
 
+Install requirements:
+```bash
+pip3 install langchain langchain_community langchain_openai pymongo pypdf python-dotenv 
+```
 
 Usage
 recursive_splitter.py file
 The following code initializes a MongoDB collection and loads a PDF file, then splits the PDF content into chunks of 50 characters with no overlap using a recursive character text splitter. It then vectorizes these chunks using OpenAI embeddings. Finally, it stores the vectorized documents in a MongoDB Atlas cluster.
 
+```python
 from pymongo import MongoClient
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
@@ -39,10 +41,11 @@ docs = text_splitter.split_documents(data)
 
 # Initialize the vector store and insert the vectorized documents into the MongoDB Atlas Cluster
 vector_store = MongoDBAtlasVectorSearch.from_documents(docs, embeddings, collection=create_collection)
+```
 
 Run the demo:
+```bash
 python3 recursive_splitter.py
-
 ```
 
 
@@ -50,18 +53,21 @@ python3 recursive_splitter.py
 
 
 
-### DOCUMENT SPECIFIC
-```plaintext
+### 2. DOCUMENT SPECIFIC
+
 Prerequisites
 A .env to file containing an Atlas Cluster Connection String and OpenAI API Key
-Install requirements:
-pip3 install langchain langchain_community langchain_openai pymongo python-dotenv
 
+Install requirements:
+```bash
+pip3 install langchain langchain_community langchain_openai pymongo python-dotenv
+```
 
 Usage
 python_splitter.py file
 The following code connects to a MongoDB Atlas cluster and creates a collection named “python_example” within the “chunking_demo” database. It uses the RecursiveCharacterTextSplitter to split a given Python code example into chunks of 100 characters with no overlap. These chunks are then vectorized using OpenAI embeddings and stored in the MongoDB collection for vector search purposes.
 
+```python
 from pymongo import MongoClient
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
@@ -103,8 +109,10 @@ python_docs = python_splitter.create_documents([python_example_code])
 
 # Initialize the vector store and insert the vectorized documents into the MongoDB Atlas Cluster
 vector_store = MongoDBAtlasVectorSearch.from_documents(python_docs, embeddings, collection=create_collection)
+```
 
 Run the demo:
+```bash
 python3 python_splitter.py
 ```
 
@@ -112,19 +120,22 @@ python3 python_splitter.py
 
 
 
-### SEMANTIC 
-```plaintext
+### 3. SEMANTIC 
+
 Prerequisites
 A sample txt document (example available in the Curriculum GitHub repository)
 A .env to file containing an Atlas Cluster Connection String and OpenAI API Key
-Install requirements:
-pip3 install langchain langchain_community langchain_openai pymongo langchain_experimental python-dotenv
 
+Install requirements:
+```bash
+pip3 install langchain langchain_community langchain_openai pymongo langchain_experimental python-dotenv
+```
 
 Usage
 semantic_splitter.py file
 The following code initializes a MongoDB collection and reads from a txt file. Then the SemanticChunker method is used to split the text into semantically similar chunks. Finally, it initializes a vector store and inserts the vectorized documents into a MongoDB Atlas cluster.
 
+```python
 from pymongo import MongoClient
 from langchain_community.vectorstores import MongoDBAtlasVectorSearch
 from langchain_experimental.text_splitter import SemanticChunker
@@ -151,8 +162,9 @@ docs = text_splitter.create_documents([text_example])
 
 # Initialize the vector store and insert the vectorized documents into the MongoDB Atlas Cluster
 vector_store = MongoDBAtlasVectorSearch.from_documents(docs, embeddings, collection=create_collection)
+```
 
 Run the demo:
+```bash
 python3 semantic_splitter.py
-
 ```
